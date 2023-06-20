@@ -1,0 +1,34 @@
+# Arquivos de configuração
+/.env
+/.env.*
+/phpunit.xml
+/phpunit-*.xml
+
+# Dependências gerenciadas pelo Composer
+/vendor/
+
+# Arquivos de build e caches
+/build/
+/public/assets/
+/public/uploads/
+/public/cache/
+/var/
+
+# Logs
+/log/
+
+# Arquivos gerados pelo PHPStorm
+.idea/
+
+# Arquivos de backup e temporários
+*.bak
+*.swp
+*.tmp
+
+# Arquivos de sessão do PHP
+/session.save_path/
+
+# Arquivos de IDEs específicos
+/.vscode/
+/.phpstorm.meta.php/
+/.phpstorm.*

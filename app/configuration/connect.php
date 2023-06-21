@@ -24,5 +24,3 @@ class Connect
         }
     }
 }
-
-$testConnection = new Connect();

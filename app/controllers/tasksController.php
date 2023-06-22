@@ -13,10 +13,14 @@ class TasksController
 
     public function getAllTasks()
     {
-        header('Content-Type: application/json');
-
         $tasks = $this->model->getAll();
         echo $tasks;
+    }
+
+    public function createTask()
+    {
+        $response = $this->model->create();
+        echo $response;
     }
 
 }

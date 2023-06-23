@@ -42,7 +42,6 @@ class TaskModel extends Connect
         }
     }
 
-
     public function create()
     {
         header('Content-Type: application/json');
@@ -85,6 +84,80 @@ class TaskModel extends Connect
         }
     }
 
+    public function update($id)
+    {
+        header('Content-Type: application/json');
+
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        $sql = "SELECT * FROM $this->table WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $task = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (!$task) {
+            http_response_code(404);
+            echo json_encode(['message' => 'Task not found'], JSON_PRETTY_PRINT);
+            return;
+        }
+
+        if (isset($data['title']) || isset($data['description'])) {
+            $title = isset($data['title']) ? $data['title'] : $task['title'];
+            $description = isset($data['description']) ? $data['description'] : $task['description'];
+
+            $updateStatements = [];
+            $values = [];
+
+            if (!empty($title)) {
+                $updateStatements[] = "`title` = ?";
+                $values[] = $title;
+            }
+
+            if (!empty($description)) {
+                $updateStatements[] = "`description` = ?";
+                $values[] = $description;
+            }
+
+            if (!empty($updateStatements)) {
+                $setClause = implode(', ', $updateStatements);
+                $values[] = $id;
+
+                $sqlUpdate = $this->connection->prepare("UPDATE $this->table SET $setClause WHERE `id` = ?");
+                $sqlUpdate->execute($values);
+
+                if ($sqlUpdate->rowCount() > 0) {
+                    $response = [
+                        'message' => 'Task updated successfully',
+                        'updated_id' => $id
+                    ];
+                    http_response_code(200);
+                    echo json_encode($response, JSON_PRETTY_PRINT);
+                } else {
+                    $response = [
+                        'message' => 'Failed to update task'
+                    ];
+                    http_response_code(500);
+                    echo json_encode($response, JSON_PRETTY_PRINT);
+                }
+            } else {
+                $response = [
+                    'message' => 'No fields provided for update'
+                ];
+                http_response_code(400);
+                echo json_encode($response, JSON_PRETTY_PRINT);
+            }
+        } else {
+            $response = [
+                'message' => 'Title or description are required fields'
+            ];
+            http_response_code(400);
+            echo json_encode($response, JSON_PRETTY_PRINT);
+        }
+    }
+
     public function delete($id)
     {
         $sql = "SELECT * FROM $this->table WHERE id = :id";
@@ -117,6 +190,5 @@ class TaskModel extends Connect
             echo json_encode(['message' => 'Failed to delete task'], JSON_PRETTY_PRINT);
         }
     }
-
-
+    
 }

@@ -1,0 +1,139 @@
+.main-content {
+    max-width: 880px;
+    min-height: 236px;
+
+    width: 100%;
+
+    margin: 0 auto;
+    padding-top: 24px;
+    border-radius: 12px;
+    border: solid 1px rgba(0, 0, 0, 0.3);
+
+    margin-bottom: 24px;
+}
+
+.card-content {
+}
+
+.main-content::before {
+    content: "";
+    display: flex;
+
+    max-width: 880px;
+
+    width: 100%;
+    height: 20px;
+    background: black;
+}
+
+.card-content h1 {
+    font-size: 36px;
+    padding: 34px;
+}
+
+.task-list-content {
+    border-top: solid 1px rgba(0, 0, 0, 0.3);
+}
+
+.task-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+}
+
+.task-info {
+    padding: 34px;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.task-info :nth-child(1) {
+    padding-bottom: 16px;
+    font-weight: 700;
+    font-size: 20px;
+    color: #000;
+}
+
+.task-actions {
+    padding-right: 34px;
+    width: 80px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.task-actions span {
+    cursor: pointer;
+}
+
+.footer-card {
+    padding: 34px;
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.footer-card span {
+    width: 150px;
+    height: 32px;
+    border-radius: 3px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-card span:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    max-width: 880px;
+    min-height: 120px;
+
+    width: 100%;
+
+    margin: 0 auto;
+    padding-top: 24px;
+    border-radius: 12px;
+    border: solid 1px rgba(0, 0, 0, 0.3);
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container h2 {
+    font-size: 24px;
+    padding: 16px;
+}
+
+.form-container form input {
+    font-size: 16px;
+    padding: 16px;
+    border: solid 1px rgba(0, 0, 0, 0.3);
+    outline: none;
+
+    margin-bottom: 24px;
+}
+
+.form-container form div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+}
+
+.form-container form div button {
+    width: 120px;
+    height: 30px;
+    margin-right: 16px;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}

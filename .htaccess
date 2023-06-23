@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /to-do-list/app/views/tasks
+
+RewriteCond %{REQUEST_URI} !^/views/tasks/index.html
+RewriteRule ^api/(.*)$ /to-do-list/app/index.php?route=$1 [QSA,L]
+
+RewriteRule ^tasks$ index.html [L]

@@ -17,9 +17,21 @@ class TasksController
         echo $tasks;
     }
 
+    public function getTaskById($id)
+    {
+        $task = $this->model->getById($id);
+        echo $task;
+    }
+
     public function createTask()
     {
         $response = $this->model->create();
+        echo $response;
+    }
+
+    public function deleteTask($id)
+    {
+        $response = $this->model->delete($id);
         echo $response;
     }
 

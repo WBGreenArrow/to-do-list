@@ -31,7 +31,7 @@ class Migration extends Connect
             }
         }
 
-        echo("Migrations executadas com sucesso.");
+        echo("Migrations executed successfully.");
     }
 
     private function isMigrationExecuted($migrationName)

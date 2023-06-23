@@ -19,6 +19,9 @@ if ($method === 'GET' && $uri === $basePath) {
     $taskController->getTaskById($id);
 } elseif ($method === 'POST' && $uri === $basePath) {
     $taskController->createTask();
+} elseif ($method === 'PATCH' && count($segments) === 4 && $segments[1] === 'api' && $segments[2] === 'tasks') {
+    $id = $segments[3];
+    $taskController->updateTask($id);
 } elseif ($method === 'DELETE' && count($segments) === 4 && $segments[1] === 'api' && $segments[2] === 'tasks') {
     $id = $segments[3];
     $taskController->deleteTask($id);

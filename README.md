@@ -65,7 +65,7 @@ Após configurar o banco, suba o servidor e vamos realizar a migrations.
 Com o servidor rodando acesse o endereço `http://localhost/to-do-list/app/migration.php` no seu navegador, ao acessar esse endereço irá aparecer a seguinte mensagem: `Migrations executed successfully.`
 
 
-Após realizar as migrations a aplicação estará disponivel para uso no endereço `http://localhost/taks`
+Após realizar as migrations a aplicação estará disponivel para uso no endereço `http://localhost/tasks`
 
 <br>
 

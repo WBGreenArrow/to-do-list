@@ -29,6 +29,12 @@ class TasksController
         echo $response;
     }
 
+    public function updateTask($id)
+    {
+        $response = $this->model->update($id);
+        echo $response;
+    }
+
     public function deleteTask($id)
     {
         $response = $this->model->delete($id);

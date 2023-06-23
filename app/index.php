@@ -3,30 +3,26 @@
 require_once("./controllers/tasksController.php");
 require_once("./models/Task.php");
 
-$route = isset($_GET['route']) ? $_GET['route'] : '';
+$uri = $_SERVER['REQUEST_URI'];
+$method = $_SERVER['REQUEST_METHOD'];
 
 $taskModel = new TaskModel();
-
 $taskController = new TasksController($taskModel);
 
-$routes = require_once("./routes.php");
+$basePath = '/api/tasks';
+$segments = explode('/', $uri);
 
-$matchedRoute = null;
-
-foreach ($routes as $routeData) {
-    if ($_SERVER['REQUEST_METHOD'] === $routeData['method'] && $route === $routeData['route']) {
-        $matchedRoute = $routeData;
-        break;
-    }
-}
-
-if ($matchedRoute) {
-    $handler = $matchedRoute['handler'];
-    [$controllerName, $methodName] = explode('@', $handler);
-
-    $controller = new $controllerName($taskModel);
-    $controller->$methodName();
+if ($method === 'GET' && $uri === $basePath) {
+    $taskController->getAllTasks();
+} elseif ($method === 'GET' && count($segments) === 4 && $segments[1] === 'api' && $segments[2] === 'tasks') {
+    $id = $segments[3];
+    $taskController->getTaskById($id);
+} elseif ($method === 'POST' && $uri === $basePath) {
+    $taskController->createTask();
+} elseif ($method === 'DELETE' && count($segments) === 4 && $segments[1] === 'api' && $segments[2] === 'tasks') {
+    $id = $segments[3];
+    $taskController->deleteTask($id);
 } else {
-    http_response_code(400);
-    echo json_encode(["message" => "router not found"], JSON_PRETTY_PRINT);
+    http_response_code(404);
+    echo json_encode(["message" => "Route not found"], JSON_PRETTY_PRINT);
 }

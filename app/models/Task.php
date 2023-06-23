@@ -22,6 +22,27 @@ class TaskModel extends Connect
         echo json_encode($resultQuery, JSON_PRETTY_PRINT);
     }
 
+    public function getById($id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $task = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($task) {
+            http_response_code(200);
+            header('Content-Type: application/json');
+            echo json_encode($task, JSON_PRETTY_PRINT);
+        } else {
+            http_response_code(404);
+            header('Content-Type: application/json');
+            echo json_encode(['message' => 'Task not found'], JSON_PRETTY_PRINT);
+        }
+    }
+
+
     public function create()
     {
         header('Content-Type: application/json');
@@ -59,8 +80,43 @@ class TaskModel extends Connect
                 'message' => 'Title and description are required fields'
             ];
 
-            http_response_code(400); // Bad Request
+            http_response_code(400);
             echo json_encode($response, JSON_PRETTY_PRINT);
         }
     }
+
+    public function delete($id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $task = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (!$task) {
+            http_response_code(404);
+            header('Content-Type: application/json');
+            echo json_encode(['message' => 'Task not found'], JSON_PRETTY_PRINT);
+            return;
+        }
+
+
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $result = $statement->execute();
+
+        if ($result) {
+            http_response_code(200);
+            header('Content-Type: application/json');
+            echo json_encode(['message' => 'Task deleted successfully'], JSON_PRETTY_PRINT);
+        } else {
+            http_response_code(500);
+            header('Content-Type: application/json');
+            echo json_encode(['message' => 'Failed to delete task'], JSON_PRETTY_PRINT);
+        }
+    }
+
+
 }
